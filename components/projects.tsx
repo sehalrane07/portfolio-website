@@ -1,28 +1,19 @@
 "use client"
-
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github, Play } from "lucide-react"
-import Image from "next/image"
 import { useState } from "react"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { ExternalLink, Github, Play, ShieldCheck, QrCode, BarChart4 } from "lucide-react"
+import {
+  Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger,
 } from "@/components/ui/dialog"
 
 export default function Projects() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
   const [activeTab, setActiveTab] = useState("all")
 
   const projects = [
@@ -30,38 +21,38 @@ export default function Projects() {
       title: "Prevention, Classification, and Detection of DDoS Attacks",
       description:
         "Applied deep learning techniques to improve the detection, classification, and prevention of Distributed Denial of Service (DDoS) attacks. Developed models aimed at identifying and mitigating various types of DDoS attacks with high accuracy.",
-      tags: ["Deep Learning", "Network Security", "DDoS", "Pattern Analysis"],
+      tags: ["Deep Learning", "Network Security"],
       link: "http://www.jetir.org/view?paper=JETIR2411579",
       github: null,
       demo: false,
+      icon: <ShieldCheck className="h-20 w-20 text-primary" />,
     },
     {
       title: "DevOps QR Code Generator",
       description:
         "Developed a web-based QR code generator that allows users to input a URL and receive a corresponding QR code, which is uploaded to an AWS S3 bucket for storage and retrieval. Containerized with Docker and implemented CI/CD with GitHub Actions.",
-      tags: ["FastAPI", "Docker", "AWS S3", "GitHub Actions", "CI/CD"],
+      tags: ["DevOps"],
       link: null,
       github: "https://github.com/sehalrane07/devops-qr-code",
       demo: false,
+      icon: <QrCode className="h-20 w-20 text-primary" />,
     },
     {
-      title: "Heathcare and Sales Data Analysis Dashboard in Power BI",
+      title: "Healthcare and Sales Data Analysis Dashboard in Power BI",
       description:
-        "Built an interactive Power BI dashboard to make complex data easier to understand and drive better decisions. Cleaned, transformed, and connected raw data using Power Query and DAX to uncover useful insights. Designed dynamic visuals and optimized performance to create a smooth and insightful user experience.",
-      tags: ["PowerBI", "Power-Query", "Data-Visualization", "DAX"],
+        "Built an interactive Power BI dashboard to make complex data easier to understand and drive better decisions. Cleaned, transformed, and connected raw data using Power Query and DAX to uncover useful insights.",
+      tags: ["Data Analysis"],
       link: null,
-      github: [
-        "https://github.com/sehalrane07/PowerBI-Dashboard",
-        "https://github.com/sehalrane07/sales-dashboard"
-      ],
+      github: ["https://github.com/sehalrane07/PowerBI-Dashboard", "https://github.com/sehalrane07/sales-dashboard"],
       demo: false,
+      icon: <BarChart4 className="h-20 w-20 text-primary" />,
     },
   ]
 
   const filteredProjects =
     activeTab === "all" ? projects : projects.filter((project) => project.tags.includes(activeTab))
 
-  const categories = ["all", "Deep Learning", "Network Security", "DevOps", "Cloud"]
+  const categories = ["all", "Deep Learning", "Network Security", "DevOps", "Data Analysis"]
 
   return (
     <section id="projects" className="py-20 bg-muted/50">
@@ -103,13 +94,8 @@ export default function Projects() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Card className="h-full flex flex-col overflow-hidden">
-                <div className="relative h-64 w-full overflow-hidden">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-300 hover:scale-105"
-                  />
+                <div className="flex items-center justify-center bg-muted h-64">
+                  {project.icon}
                 </div>
                 <CardHeader>
                   <CardTitle>{project.title}</CardTitle>
@@ -173,4 +159,3 @@ export default function Projects() {
     </section>
   )
 }
-
